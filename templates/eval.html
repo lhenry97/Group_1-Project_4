@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning Model Evaluation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Evaluation</h1>
+        <form id="inputForm" class="mt-4">
+            <div class="mb-3">
+                <label for="inputData" class="form-label">Enter Your Data:</label>
+                <input type="text" class="form-control" id="inputData" placeholder="Input your data here" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+        <div id="result" class="mt-4" style="display: none;">
+            <h3>Result:</h3>
+            <p id="resultText"></p>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#inputForm').on('submit', function(e) {
+                e.preventDefault();
+                const inputData = $('#inputData').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/predict',  // Update with your Flask endpoint
+                    data: JSON.stringify({ data: inputData }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        $('#resultText').text(response.result);
+                        $('#result').show();
+                    },
+                    error: function(error) {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
