@@ -12,3 +12,4 @@ https://www.kaggle.com/datasets/erdemtaha/cancer-data/data
 This Data has a CC BY-NC-SA 4.0 License. 
 https://creativecommons.org/licenses/by-nc-sa/4.0/
 # Ethics:
+No personally identifiable information is present in the dataset as the data is summarised by country.
