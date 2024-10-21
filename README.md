@@ -6,7 +6,8 @@ The aim of our project is to predict whether a cancer is Benign or Malignant bas
 https://www.kaggle.com/datasets/erdemtaha/cancer-data/data
 
 # Screenshots:
-https://files.slack.com/files-pri/T06SJF7T8J3-F07SKEWF6K0/image.png
+![Uploading image.png…]()
+
 
 # Licensing:
 This Data has a CC BY-NC-SA 4.0 License. 
