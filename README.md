@@ -6,7 +6,7 @@ The aim of our project is to use machine learning to predict whether a cancer is
 https://www.kaggle.com/datasets/erdemtaha/cancer-data/data
 
 # Screenshots:
-
+![image](https://github.com/lhenry97/Group_1-Project_4/blob/main/Image.png)
 
 # Licensing:
 This Data has a CC BY-NC-SA 4.0 License. 
