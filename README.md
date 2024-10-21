@@ -1,12 +1,12 @@
 ### Project Proposal
 
-## Goal of the Project:
+# Goal of the Project:
 
-## Dataset Link: 
+# Dataset Link: 
 https://www.kaggle.com/datasets/erdemtaha/cancer-data/data
 
-## Screenshots:
+# Screenshots:
 
-## Licensing:
+# Licensing:
 
-## Ethics:
+# Ethics:
