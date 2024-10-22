@@ -17,5 +17,5 @@ This Data has a CC BY-NC-SA 4.0 License.
 https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 # Ethics:
-No personally identifiable information is present in the dataset as the individual datapoints are differentiated by an ID number.
+This dataset contains a unique anonymous ID number for each patients cancer data. This is not considered a personally identifiable information as it is not linked back to any specific personal information of that patient such as a drivers license number or social security number.
 
