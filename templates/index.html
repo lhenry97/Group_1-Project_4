@@ -7,25 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Group 1 Machine Learning Project</title>
 
-    <style>
-        #ML_models {
-            color: pink;
-        }
-        .menu_pages {
-            color: green;
-        }
-        #report {
-            color: orangered;
-        }
-    </style>
+    <!-- Load bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <!-- Load navigation bar css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
 <body>
+  <!-- Navigation -->
+  <!-- Black horizontal navbar with white text -->
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <!-- Tab Panes -->
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a class="nav-link active" href="http://127.0.0.1:5000/">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:5000/Prediction">Predictor App</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:5000/api_json_connectivity">API</a></li>
+        <li class="nav-item"><a class="nav-link" href="https://raw.githubusercontent.com/lhenry97/Group_1-Project_4/refs/heads/main/README.md">README.md</a></li>
+      </ul>
+    </div>
+  </nav>
 
+  <!-- Run JS function to toggle active menu bar options on
+  <script src="./static/js/script.js"></script>   -->
+  
   <!-- Header -->
-  <h1>Cancer Prediction Project</h1>
-
+  <div class="container mt-2">
+  <h1>Machine Learning Cancer Prediction Project</h1>
+  
   <!-- Image -->
   <img src="https://c.pxhere.com/images/fe/8c/b915fc5d7667d29dd9a3eedae59a-1638452.jpg!d"
        alt="robot hand touching human hand"
@@ -44,38 +54,42 @@
   <!-- <a href="#">This is placeholder link goes nowhere, for now</a> -->
 
   <!-- Paragraph -->
-  <p>Welcome to the cancer machine learning predictor app. <br />
-    Please use the links below to navigate the site to learn more about this project.  <br />
-    To go straight to the predictor app, please go to "Predictor App" link below.
-  </p>
+  <h3>Welcome to the machine learning cancer predictor app.</h3>
+  <p>Follow the links below in sequential order to navigate the project from concept to conclusion.</p>
+  <p>To go straight to the predictor app, please go to "Predictor App" link below or from the navigation menu bar above.</p>
 
   <!-- Otherwise dot/bullet points unordered list -->
+  <h3>Project Steps</h3>
   <ul class="menu_pages">
     <!-- Placeholder link -->
-    <li><a href="">Home</a></li>
-    <!-- Placeholder link -->
-    <li class="info"><a href="#">About Page</a></li>
+    <li><a href="http://127.0.0.1:5000/Concept_Ideation">Concept Ideation</a></li>
     <!-- Goes to link in same tab -->
-    <li>Machine Learning Models</li>
+    <li><a href="http://127.0.0.1:5000/Data_API">Data Fetching and API Integration</a></li>
+    <!-- Placeholder link -->
+    <li><a href="http://127.0.0.1:5000/Data_Pre-processing">Data Pre-processing and Analysis</a></li>
+    <li>Machine Learning Model Builds</li>
       <!-- Ordered List -->
       <!-- Otherwise dot points -->
       <ol id="ML_models">
         <li><a href="http://127.0.0.1:5000/Zahra_LR">Linear Regression</a></li>
         <li><a href="http://127.0.0.1:5000/Jess_Aria_SVM">SVM</a></li>
         <li><a href="http://127.0.0.1:5000/Jess_Aria_RF">Random Forest</a></li>
-        <li><a href="http://127.0.0.1:5000/Cathy_NN_KT">Keras Tuner</a></li>
+        <li><a href="http://127.0.0.1:5000/Cathy_and_Lauren_NN_KT">Keras Tuner</a></li>
       </ol>
       <!-- normal ul with class -->
-    <li id="report"><a href="http://127.0.0.1:5000/Lauren_Eval">Evaluation</a></li>
+    <li id="report"><a href="http://127.0.0.1:5000/Group_Eval">Evaluation</a></li>
+    <li id="report"><a href="http://127.0.0.1:5000/Model_Optimisation">Optimisation</a></li>
     <!-- Goes to link in new page/tab -->
-    <li><a href="http://127.0.0.1:5000/db_data">Jsonified data from postgres</a></li>
+    <li><a href="http://127.0.0.1:5000/api_json_connectivity">Jsonified data from postgres</a></li>
 
     <li><a href="http://127.0.0.1:5000/Prediction">Predictor App</a></li> 
+    <!-- Placeholder link -->
+    <li class="info"><a href="https://raw.githubusercontent.com/lhenry97/Group_1-Project_4/refs/heads/main/README.md">README.md About Page</a></li>
     <!-- Goes to link in same tab -->
-    <li id="report"><a href="http://127.0.0.1:5000/viz1">Vizs</a></li>
-
+    <li id="report"><a href="http://127.0.0.1:5000/Conclude">Conclusion</a></li>
   </ul>
+  </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
