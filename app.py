@@ -41,6 +41,7 @@ app = Flask(__name__)
 #################################################
 # Flask Routes
 #################################################
+kt_model = joblib.load('kt_model.pkl')
 
 @app.route("/")
 def index():
@@ -80,6 +81,9 @@ def RF():
 @app.route('/Cathy_and_Lauren_NN_KT')
 def KT():
     print("Server received request for 'Cathy and Lauren's KT Model' page...")  
+    features = [float(request.form['feature1']), float(request.form[])]
+    predictions = kt_model.predict([data['features']])
+    binary_predictions = (predictions > 0.5).astype(int).flatten()
     return render_template("ker_tun_model.html")
 
 @app.route('/Group_Eval')
