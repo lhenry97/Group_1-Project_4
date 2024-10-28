@@ -7,6 +7,7 @@ warnings.filterwarnings('ignore')
 
 # Import Dependencies
 import numpy as np
+import os
 from flask import Flask, jsonify, render_template, request
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
@@ -14,14 +15,20 @@ from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, text
 from sqlalchemy import func
 from config import password
+from config import db_host
 import psycopg2
 import joblib
 
+# Read the database password from the environment variable in AWS for deployment
+# password = os.getenv('DB_PASSWORD')
+# db_host = os.getenv('DB_HOST')
+
 #################################################
-# Database Setup
+# Database Connection Setup
 #################################################
 # Create engine using the `postgres` database file on local host
-engine = create_engine(f'postgresql://postgres:{password}@localhost:5432/Cancer_db')
+engine = create_engine(f'postgresql://postgres:{password}@{db_host}:5432/Cancer_db')
+# engine = create_engine(f'postgresql://postgres:{password}@host.docker.internal:5432/Cancer_db')
 connection = engine.connect()
 
 # Reflect Database into ORM classes
@@ -66,7 +73,7 @@ def visualisations():
 @app.route("/Zahra_LR")
 def logistic_regression():
     print("Server received request for 'Zahra's Logistic Regression Model' page...")
-    return render_template("lin_reg_model.html")
+    return render_template("log_reg_model.html")
 
 @app.route('/Jess_Aria_SVM')
 def SVM():
@@ -93,42 +100,73 @@ def optimisations():
     print("Server received request for 'Lauren Evaluatiion of Models' page...")  
     return render_template("optimise.html")
 
-@app.route('/Zarahs')
-def zarah():
-    # Step 3: Load the pre-trained logistic regression model and the refitted scaler
-    model = joblib.load('Logistic_Regression_Model/FeatureReduced_logistic_regression_model.pkl')
-    scaler = joblib.load('Logistic_Regression_Model/scaler_reduced.pkl')  # Load the new scaler fitted on 11 features
-    return render_template('result.html')
-
-@app.route('/Prediction', methods=['POST'])
+@app.route('/Prediction')
 def prediction():
-    print("Server received request for 'Ensemble Evaluatiion of Models' page...")  
-    # Collect input data from the form for the selected 11 features
-    input_features = [
-        float(request.form['area_mean']),
-        float(request.form['concave_points_mean']),
-        float(request.form['radius_worst']),
-        float(request.form['texture_worst']),
-        float(request.form['perimeter_worst']),
-        float(request.form['area_worst']),
-        float(request.form['smoothness_worst']),
-        float(request.form['concave_points_worst']),
-        float(request.form['symmetry_worst']),
-        float(request.form['area_se']),
-        float(request.form['radius_se'])  
-    ]
+    # Step 3: Load the pre-trained logistic regression model and the refitted scaler
+    return render_template('prediction_app.html')
 
-    # Convert input features into a NumPy array with shape (1, 11)
-    features = np.array(input_features).reshape(1, -1)
+@app.route('/Result', methods=['POST'])
+def result():
+    print("Server received request for 'Prediction Result' page...")
 
-    # Step 4: Scale the input features using the new refitted scaler
-    scaled_features = scaler.transform(features)
+    try:   
+    # Collect input data from the form for the selected 30 features
+        input_features = [
+            float(request.form['area_mean']),
+            float(request.form['area_worst']),
+            float(request.form['compactness_mean']),
+            float(request.form['compactness_se']),
+            float(request.form['compactness_worst']),
+            float(request.form['concave points_mean']),
+            float(request.form['concave points_se']),
+            float(request.form['concave points_worst']),
+            float(request.form['concavity_mean']),
+            float(request.form['concavity_worst']),
 
-    # Make a prediction using the scaled features
-    prediction = model.predict(scaled_features)
+            float(request.form['fractal_dimension_mean']),
+            float(request.form['fractal_dimension_worst']),
+            float(request.form['perimeter_mean']),
+            float(request.form['perimeter_worst']),
+            float(request.form['radius_mean']),
+            float(request.form['radius_worst']),
+            float(request.form['smoothness_mean']),
+            float(request.form['smoothness_se']),
+            float(request.form['smoothness_worst']),
+            float(request.form['symmetry_mean']),
 
-    # Render the result page with the prediction
-    return render_template('prediction_app.html', prediction_text=f'The predicted class is: {prediction[0]}')
+            float(request.form['symmetry_se']),
+            float(request.form['symmetry_worst']),
+            float(request.form['texture_mean']),
+            float(request.form['texture_se']),
+            float(request.form['texture_worst']),
+            float(request.form['area_se']),
+            float(request.form['concavity_se']),
+            float(request.form['perimeter_se']),
+            float(request.form['radius_se']),
+            float(request.form['fractal_dimension_se']) 
+        ]
+
+        # Convert input features into a NumPy array with shape (1, 32)
+        features = np.array(input_features).reshape(1, -1)
+        # Step 3: Load the pre-trained logistic regression model
+        model = joblib.load('Logistic_Regression_Model/tuned_logistic_regression_model.pkl')
+        scaler = joblib.load('Logistic_Regression_Model/scaler.pkl')  # Load the new scaler fitted on 11 features
+
+        # Step 4: Scale the input features using the new refitted scaler
+        scaled_features = scaler.transform(features)
+
+        # Make a prediction using the scaled features
+        log_prediction = model.predict(scaled_features)
+
+        # Optionally, get the predicted class or probability
+        log_pred_text = "Malignant" if log_prediction[0] == 1 else "Benign"  # Assuming binary classification
+
+        # Render the result page with the prediction
+        return render_template('result.html', log_pred=f'{log_prediction[0]} = {log_pred_text}')
+    except ValueError as e:
+        return render_template('result.html', prediction_text=f'The predicted class is not determined.')
+    except Exception as e:
+        return render_template('result.html', prediction_text=f'The predicted class is not determined.')
 
 @app.route('/Conclude')
 def conclusion():
@@ -159,4 +197,5 @@ def get_cancer_db_data():
         session.close()
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True) #local deployment
+    # app.run(host='0.0.0.0', port=8080, debug=True) #internet deployment
