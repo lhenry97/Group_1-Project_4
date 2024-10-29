@@ -148,60 +148,74 @@ def result():
             float(request.form['fractal_dimension_se']) 
         ]
 
+        # # Collect input data from the form for the selected 30 features
+        # svm_input_features = [
+        #     float(request.form['concave points_mean']),
+        #     float(request.form['radius_worst']),
+        #     float(request.form['texture_worst']),
+        #     float(request.form['symmetry_worst']),
+        #     float(request.form['radius_se'])
+        # ]
+
         # Print input features for debugging
         print("Input Features:", input_features)
+        # print("SVM Input Features:", svm_input_features)
 
         # Convert input features into a NumPy array
         features = np.array(input_features).reshape(1, -1)
-        print("Features Shape:", features.shape)
-
-        # Convert input features into a NumPy array with shape (1, 32)
-        features = np.array(input_features).reshape(1, -1)
-        # Step 4: Scale the input features using the new refitted scaler
-        
-        # scaled_features = scaler.transform(features)
+                
+         ####################################################
         # Model 1: Load the pre-trained Logistic Regression Model
         model_1 = joblib.load('Saved_Models/tuned_logistic_regression_model.pkl')
-        # scaler = joblib.load('Saved_Models/scaler.pkl')
-        
-        # model_2 = joblib.load('Saved_Models/tunned_model_svm.pkl') # Model 2: Load the pre-trained SVM
-        model_3 = joblib.load('Saved_Models/rf_model.pkl') # Model 3: Load the pre-trained Random Forest
-        model_4 = joblib.load('Saved_Models/kt_best_model.pkl') # Model 4: Load the pre-trained Keras Tuner
-
         # Make a prediction using the scaled features
         prediction_1 = model_1.predict(features)
-        print(prediction_1)
-        # prediction_2 = model_2.predict(features)
+        ####################################################
+        # Model 2: Load the pre-trained SVM                       
+        model_2 = joblib.load('Saved_Models/svm_forapp.pkl') 
+        scaler = joblib.load('Saved_Models/scaler_forapp.pkl')
+        selector = joblib.load('Saved_Models/selector_forapp.pkl')
+
+        svm_scaled = scaler.transform(features)
+        svm_features = selector.transform(svm_scaled)
+        prediction_2 = model_2.predict(svm_features)
+        ####################################################
+        # Model 3: Load the pre-trained Random Forest                                           
+        model_3 = joblib.load('Saved_Models/rf_model.pkl')
         prediction_3 = model_3.predict(features)
-        print(prediction_3)
-        prediction_4 = model_4.predict(features)
-        prediction_4 = int(np.ravel(prediction_4))
-        print(prediction_4)
-                
+        ####################################################
+        # Model 4: Load the pre-trained Keras Tuner
+        model_4 = joblib.load('Saved_Models/kt_best_model.pkl') 
+        prediction_4 = np.ravel(model_4.predict(features))
+        ####################################################       
         # prediction_5 = model_5.predict(model_5)
-        # FINAL_PREDICTION
-        prediction_5 = st.mode([prediction_1[0], prediction_3[0], prediction_4])
+        # FINAL_PREDICTION USING ENSEMBLE METHOD
+        prediction_5 = st.mode([prediction_1[0], prediction_2[0], prediction_3[0], int(prediction_4[0])])
         print(prediction_5)
 
+        # Print Predictions
+        print(f"LG Pred: {prediction_1[0]}")
+        print(f"LG Pred: {prediction_2[0]}")
+        print(f"LG Pred: {prediction_3[0]}")
+        print(f"LG Pred: {int(prediction_4[0])}")
+        print(f"LG Pred: {prediction_5}")
+
         log_pred_text_1 = "Malignant" if prediction_1[0] == 1 else "Benign"  # Assuming binary classification
-        # log_pred_text_2 = "Malignant" if prediction_2[0] == 1 else "Benign"  # Assuming binary classification
+        log_pred_text_2 = "Malignant" if prediction_2[0] == 1 else "Benign"  # Assuming binary classification
         log_pred_text_3 = "Malignant" if prediction_3[0] == 1 else "Benign"  # Assuming binary classification
-        log_pred_text_4 = "Malignant" if prediction_4 == 1 else "Benign"  # Assuming binary classification
+        log_pred_text_4 = "Malignant" if int(prediction_4[0]) == 1 else "Benign"  # Assuming binary classification
         log_pred_text_5 = "Malignant" if prediction_5 == 1 else "Benign"  # Assuming binary classification
 
         # Create prediction text
         prediction_text = (
             f'Logistic Regression Class Prediction: {prediction_1[0]} = {log_pred_text_1}<br>'
-            # f'SVM Class Prediction: {prediction_2[0]} = {log_pred_text_2}<br>'
+            f'SVM Class Prediction: {prediction_2[0]} = {log_pred_text_2}<br>'
             f'Random Forest Class Prediction: {prediction_3[0]} = {log_pred_text_3}<br>'
-            f'Keras Tuner Class Prediction: {prediction_4} = {log_pred_text_4}<br><br>'
+            f'Keras Tuner Class Prediction: {int(prediction_4[0])} = {log_pred_text_4}<br><br>'
             f'Ensemble Method Class Prediction: {prediction_5} = {log_pred_text_5}'
         )
         
         # Render the result page with the prediction
         return render_template('result.html', prediction_text=prediction_text)
-
-
 
         # return render_template('result.html', prediction_text=prediction_text)
 
