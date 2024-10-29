@@ -18,6 +18,18 @@ You are free to use this dataset for non-commercial purposes. If you modify the 
 ### License
 For more information, please refer to the [CC BY-NC-SA 4.0 License] (https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
+## Ethical Considerations
+
+### Ethical Use of Dataset
+This dataset has been utilized with the utmost consideration for ethical standards and practices. The data is anonymized, ensuring that no Personally Identifiable Information (PII) is included.
+
+### Purpose and Use
+The dataset has been used exclusively for educational and research purposes to develop a machine learning model for predicting whether a tumor is benign or malignant.
+
+### Privacy and Confidentiality
+The dataset includes anonymized IDs to protect the privacy of individuals. All efforts have been made to ensure data confidentiality and compliance with privacy regulations.
+
+By including this statement, we aim to uphold ethical standards in the development and use of machine learning models and protect the privacy and rights of individuals.
 
 # Slide Deck:
 https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content=DAGUqhcvQm0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
@@ -30,8 +42,7 @@ The data will undergo cleaning and removal of any duplications or unnecessary da
 
 
 
-# Ethics:
-This dataset contains a unique anonymous ID number for each patients cancer data. This is not considered a personally identifiable information as it is not linked back to any specific personal information of that patient such as a drivers license number or social security number.
+
 
 # Workflow for Reproducibility
 
