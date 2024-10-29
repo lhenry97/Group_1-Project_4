@@ -1,4 +1,7 @@
-### Project Proposal
+### Cancer Diagnosis Prediction App
+
+## Disclaimer
+This machine learning model is designed for educational and research purposes only. It is not intended to diagnose, treat, cure, or prevent any disease. Always consult a healthcare professional for medical advice, diagnosis, or treatment.
 
 # Goal of the Project:
 The purpose for this project is to assist with breast cancer survial through early intervention. A website will be created for the use of doctors which will contain user inputted data based on the visual characteristics of a cancer. A machine learning model will be used to predict a diagnosis on whether the identified cancer is Benign or Malignant based on these visual characteristics. The features that will be used to assist in determining the diagnosis include: mean radius, mean texture, mean perimeter, mean area, mean smoothness, mean compactness, mean concavity and mean concave points. The dataset identifed for this project is the Breast Cancer Wisconsin (Diagnostic) Data Set. 
