@@ -103,6 +103,29 @@ We explored other machine learning algorithms such as Random Forest, SVM, or Neu
 ## Random Forest Model 3
 
 ## Keras Tuner Model 4
+### Overview
+A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
+The notebook, ML_KT_Model documents the workflow of the keras tuner including parameter selection, model training, optimisation of the model and evaluating and testing with the model created. It includes an initial model that specifies the specific parameters used in the model and then a second model that utilises a function to perform hyperparameter tuning for the model. 
+
+### Contents
+-**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
+
+-**Kt_best_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+### Steps
+1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 16 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+
+### Model Evaluation
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
+
+### Results
+The model's performance slightly improved after hyperparameter tuning, which is reflected in:
+- A small increase in accuracy (from 97.18% to 98.59%).
+- Minor increase in precision and F1-scores for class 0 (benign).
+- A slight decrease in misclassifications for class 1 (malignant) from 3 to 1.
+
+Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes. 
 
 # Looking Forward/Conclusion
 1. Additional data will continue to promote model performance and the app could be used globally to collect data that doctors input into the app.
