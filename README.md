@@ -1,10 +1,35 @@
-### Project Proposal
+### Cancer Diagnosis Prediction App
+
+## Disclaimer
+This machine learning model is designed for educational and research purposes only. It is not intended to diagnose, treat, cure, or prevent any disease. Always consult a healthcare professional for medical advice, diagnosis, or treatment.
 
 # Goal of the Project:
-The purpose for this project is to assist with breast cancer survial through early intervention. A website will be created for the use of doctors which will contain user inputted data based on the visual characteristics of a cancer. A machine learning model will be used to predict a diagnosis on whether the identified cancer is Benign or Malignant based on these visual characteristics. The features that will be used to assist in determining the diagnosis include: mean radius, mean texture, mean perimeter, mean area, mean smoothness, mean compactness, mean concavity and mean concave points. The dataset identifed for this project is the Breast Cancer Wisconsin (Diagnostic) Data Set. 
+The purpose for this project is to assist with breast cancer survial through early intervention. An application has been created for the use of researchers which contains user inputted data based on the visual characteristics of a cancer. A machine learning model has been selected to be used to predict a diagnosis on whether the identified cancer is Benign or Malignant based on these visual characteristics. The features that are used to assist in determining the diagnosis include: mean radius, mean texture, mean perimeter, mean area, mean smoothness, mean compactness, mean concavity and mean concave points. The dataset identifed for this project is the Breast Cancer Wisconsin (Diagnostic) Data Set. 
 
-# Dataset Link: 
-https://www.kaggle.com/datasets/erdemtaha/cancer-data/data
+## Dataset Information: 
+This dataset is provided under the **Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) 4.0** license.
+
+### Attribution
+The original dataset was provided by the [UC Irvine Machine Learning Repository](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data)
+
+### Usage
+You are free to use this dataset for non-commercial purposes. If you modify the dataset, you must distribute the modified dataset under the same license.
+
+### License
+For more information, please refer to the [CC BY-NC-SA 4.0 License] (https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+## Ethical Considerations
+
+### Ethical Use of Dataset
+This dataset has been utilized with the utmost consideration for ethical standards and practices. The data is anonymized, ensuring that no Personally Identifiable Information (PII) is included.
+
+### Purpose and Use
+The dataset has been used exclusively for educational and research purposes to develop a machine learning model for predicting whether a tumor is benign or malignant.
+
+### Privacy and Confidentiality
+The dataset includes anonymized IDs to protect the privacy of individuals. All efforts have been made to ensure data confidentiality and compliance with privacy regulations.
+
+By including this statement, we aim to uphold ethical standards in the development and use of machine learning models and protect the privacy and rights of individuals.
 
 # Slide Deck:
 https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content=DAGUqhcvQm0&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
@@ -15,12 +40,9 @@ https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content
 # Method
 The data will undergo cleaning and removal of any duplications or unnecessary data. Feature engineering will then be conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres will be used to manage the database and the app.py flask app will be used to connect to the database to enable a website to call information from it. A number of machine learning models will be tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and potentially Deep Neural Network. Each model will undergo optimisation and then they will be evaluated to select the best model. The selected machine learning model will then be used in the final website. The website will look similar to the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
 
-# Licensing:
-This Data has a CC BY-NC-SA 4.0 License.
-https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-# Ethics:
-This dataset contains a unique anonymous ID number for each patients cancer data. This is not considered a personally identifiable information as it is not linked back to any specific personal information of that patient such as a drivers license number or social security number.
+
+
 
 # Workflow for Reproducibility
 
@@ -92,6 +114,29 @@ We explored other machine learning algorithms such as Random Forest, SVM, or Neu
 ## Random Forest Model 3
 
 ## Keras Tuner Model 4
+### Overview
+A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
+The notebook, ML_KT_Model documents the workflow of the keras tuner including parameter selection, model training, optimisation of the model and evaluating and testing with the model created. It includes an initial model that specifies the specific parameters used in the model and then a second model that utilises a function to perform hyperparameter tuning for the model. 
+
+### Contents
+-**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
+
+-**Kt_best_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+### Steps
+1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 16 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+
+### Model Evaluation
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
+
+### Results
+The model's performance slightly improved after hyperparameter tuning, which is reflected in:
+- A small increase in accuracy (from 97.18% to 98.59%).
+- Minor increase in precision and F1-scores for class 0 (benign).
+- A slight decrease in misclassifications for class 1 (malignant) from 3 to 1.
+
+Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes. 
 
 # Looking Forward/Conclusion
 1. Additional data will continue to promote model performance and the app could be used globally to collect data that doctors input into the app.
