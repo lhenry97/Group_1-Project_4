@@ -9,13 +9,13 @@ The purpose for this project is to assist with breast cancer survial through ear
 ## Dataset Information: 
 This dataset is provided under the **Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) 4.0** license.
 
-## Attribution
+### Attribution
 The original dataset was provided by the [UC Irvine Machine Learning Repository](https://www.kaggle.com/datasets/uciml/breast-cancer-wisconsin-data)
 
-## Usage
+### Usage
 You are free to use this dataset for non-commercial purposes. If you modify the dataset, you must distribute the modified dataset under the same license.
 
-# License
+### License
 For more information, please refer to the [CC BY-NC-SA 4.0 License] (https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 
