@@ -41,14 +41,16 @@ https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content
 The data will undergo cleaning and removal of any duplications or unnecessary data. Feature engineering will then be conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres will be used to manage the database and the app.py flask app will be used to connect to the database to enable a website to call information from it. A number of machine learning models will be tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and potentially Deep Neural Network. Each model will undergo optimisation and then they will be evaluated to select the best model. The selected machine learning model will then be used in the final website. The website will look similar to the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
 
 
-
-
-
 # Workflow for Reproducibility
 
 ## Data Fetching and API Integration
 
-This section explains how to connect to a PostgreSQL database using psycopg2 in python.
+When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
+<img src="https://github.com/lhenry97/Group_1-Project_4/blob/main/images/data%archictecture%204.png" alt="pgAdmin 4" width="300"/>
+
+Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
+
+This section also explains how to connect to a PostgreSQL database using psycopg2 in python.
 
 ### Database Setup (pgAdmin4)
 1. Download/clone the all the files from dataset from https://github.com/lhenry97/Group_1-Project_4.git.
