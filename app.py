@@ -22,6 +22,7 @@ from sklearn.ensemble import VotingClassifier
 import statistics as st
 from collections import Counter
 
+
 # Read the database password from the environment variable in AWS for deployment
 # password = os.getenv('DB_PASSWORD')
 # db_host = os.getenv('DB_HOST')
@@ -191,14 +192,12 @@ def result():
         svm_scaled = scaler.transform(features)
         svm_features = selector.transform(svm_scaled)
         prediction_4 = model_4.predict(svm_features)
-        print(f"SVM Pred: {prediction_2[0]}")
-
+        print(f"SVM Pred: {prediction_4[0]}")
 
         ####################################################       
-        # prediction_5 = model_5.predict(model_5)
         # FINAL_PREDICTION USING ENSEMBLE METHOD
-        prediction_5 = st.mode([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_3[0]])
-        pred_counts = Counter([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_3[0]])
+        prediction_5 = st.mode([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
+        pred_counts = Counter([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
 
         print(f"Original Ensemble Pred: {prediction_5}")
         print(f"{pred_counts}")
@@ -228,7 +227,7 @@ def result():
             f'Keras Tuner Class Prediction: {int(prediction_1[0])} = {log_pred_text_1}<br>'
             f'Logistic Regression Class Prediction: {prediction_2[0]} = {log_pred_text_2}<br>'
             f'Random Forest Class Prediction: {prediction_3[0]} = {log_pred_text_3}<br>'
-            f'SVM Class Prediction: {int(prediction_4[0])} = {log_pred_text_4}<br><br>'
+            f'SVM Class Prediction: {prediction_4[0]} = {log_pred_text_4}<br><br>'
             f'Ensemble Method Class Prediction: {prediction_5} = {log_pred_text_5}'
         )
         

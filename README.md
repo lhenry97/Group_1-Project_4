@@ -45,15 +45,20 @@ The data will undergo cleaning and removal of any duplications or unnecessary da
 
 ## Data Fetching and API Integration
 
+### To deploy the Flask app locally start:
+1. load csv into pgAdmin4 as per Database Setup instructions further below.
+2. run app.py (located in the root folder) in the terminal/vscode AFTER setting up the database in pgAdmin 4.
+3. running the jupyter notebook Collated_Machine_Learning_Notebook.ipynb retrieves json data served by the flask app and saves the ML models.
+
 When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
-<img src="https://github.com/lhenry97/Group_1-Project_4/blob/main/images/data%archictecture%204.png" alt="pgAdmin 4" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%archictecture%204.png" alt="data architecture" width="300"/>
 
 Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
 
 This section also explains how to connect to a PostgreSQL database using psycopg2 in python.
 
 ### Database Setup (pgAdmin4)
-1. Download/clone the all the files from dataset from https://github.com/lhenry97/Group_1-Project_4.git.
+1. Download/clone the repository from https://github.com/lhenry97/Group_1-Project_4.git.
 2. Open pgAdmin 4 and create a new database called Cancer_db
 3. Right click on Cancer_db and select Query Tool
 4. Select the Folder icon to open a file called "cancer_data.sql" from the data folder
@@ -61,13 +66,16 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 6. Refresh the Table in Schemas, right-click on Cancer_Data table and select "Import/Export data"
 7. Find the file called Cancer_Data.csv also in the "data" folder and open this file.
 8. In Options menu set Header to "active" and Delimiter as ",".
-9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format.
+9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format. The app.py file will pull this data once it is run.
 <img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png" alt="pgAdmin 4" width="300"/>
 
 ### Fetching and API Integration
 1. From the root directory of the repo open app.py file
 2. Install psycopg2 and numpy if you need to: use pip to install the libraries
-3. Create a new file in the root directory called "config.py" which is where you provide your pgAdmin password in a safe manner. Add this text to the file: "password = "your_password_here" and replace "your_password_here" with your real password. 
+3. Create a new file in the root directory called "config.py" which is where you provide your pgAdmin password in a safe manner. 
+    - Add this text to the file: "password = "your_password_here" and replace "your_password_here" with your real password.
+    - Add: db_host = "localhost"
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config%204.png" alt="pgAdmin 4" width="300"/>
     Save this in root directory of the cloned repo.
     This "config.py" file is referenced in the .gitignore file for safety reasons and is not present in the github repo. 
 4. You can also add db_host = "localhost" to the file config.py if connecting to the local server.
@@ -115,6 +123,53 @@ We explored other machine learning algorithms such as Random Forest, SVM, or Neu
 
 ## Random Forest Model 3
 
+### Goal
+This part of the project leverages a Random Forest model to classify outc
+omes in a medical dataset, particularly predicting benign (B) or malignan
+t (M) cancer diagnoses. By utilizing the feature importance from the Ran
+dom Forest, we aim to identify the most crucial features contributing to t
+hese predictions. We will then refine the dataset by selecting these critica
+l features, enhancing both the model's efficiency and interpretability.
+ 
+### Contents
+This notebook, ML_RF_Models_AL.ipynb, documents the complete workfl
+ow of the Random Forest analysis, feature selection using feature import
+ance, model training, optimizing the model  and evaluating and  testing 
+with the model created.
+ 
+rf_model.pkl: This is the saved version of the trained Random Forest 
+model, ready for future predictions.
+ 
+best_model.pkl: This is the saved and optimized Random Forest model, 
+refined with the top 11 features, and is suitable for future predictions 
+with fewer features.
+ 
+### Steps
+Initially, a basic Random Forest model was trained and the feature import
+ance was 
+accessed . Based on this analysis, the top 11 features were selected to co
+nstruct a refined second model. This second 
+model was then optimized using GridSearchCV. To evaluate the performa
+nce of the optimized model, metrics such as accuracy score, confusion m
+atrix, and cross-validation scores were employed. Finally, the model's per
+formance was validated by testing it with unseen data.
+ 
+### Key Findings:
+1. Reduced Accuracy: The model's accuracy decreased from 96% to 9
+5% after reducing the number of features. This suggests a slight im
+pact on overall performance.
+2. Importance of Removed Features: The increase in false negatives in
+dicates that some of the removed features were essential for correc
+tly identifying malignant cases. Their exclusion led to a decrease in 
+the model's ability to detect these critical instances.
+Lesson Learned:
+To conclude, it's apparent that retaining a broader set of features is bene
+ficial for achieving optimal results. This ensures that crucial information i
+sn't lost, enhancing the model’s ability to make accurate and reliable pre
+dictions. This experience underscores the importance of balancing model 
+simplicity with the retention of essential predictive information for high-
+stakes applications like medical diagnosis.
+
 ## Keras Tuner Model 4
 ### Overview
 A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
@@ -140,12 +195,21 @@ The model's performance slightly improved after hyperparameter tuning, which is 
 
 Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes. 
 
-# Looking Forward/Conclusion
-1. Additional data will continue to promote model performance and the app could be used globally to collect data that doctors input into the app.
-2. Use an ensemble approach using all the models where the ideal algorithm has low bias (accurately models the true relationshio in the data) and low variability (producing consistent predictions across different datasets).
+# Ensemble, Looking Forward and Conclusion
 
-### Sources
-    - W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php 
-    - Chat gpt and Codepen used to convert README.md file into html and css formating for the web app pages including the predictor app.
-    - Flask linking html pages: https://www.youtube.com/watch?v=VyICzbnf6q4
-    - App runner web deployment: https://farzam.at/en/blog/deploy-flask-apps-aws-app-runner
+An ensemble approach is a method that uses all the models where the ideal algorithm has low bias (accurately models the true relationship in the data) and low variability (producing consistent predictions across different datasets).
+
+Since all of the 4 models produced strong perfomance metrics, we considered leveraging the strengths of all the models with a max count ensemble method or majority rules approach. When resolving any ties, the SVM model was utilised because it resulted in the best performance metrics for the ensemble. Additionally, our SVM model is able to reduce computational resources by reducing dimensionality to only using 5 features. By focussing on these 5 features simplifies the interpretability of the model and can guide future feature engineering efforts to optimise the model further.
+
+The ensemble method produced excellent perfromance metrics with an overall accuracy of 0.98. The precision score of 1.0 indicates that predicted malignancies were 100% accurate. The recall score of 0.94 indicates that 94% of actual malignancies were accurately predicted.
+
+Even though the low error rate of 3 false negatives is a good result, in a medical context the consequences of not identyfing malignancies such as these 3 instances can have serious and longstanding implications.
+
+Collaborating with the healthcare community will enhance the model's performance and reduce error rates. By incorporating carefully curated input from healthcare professionals into the model's prediction app, we can improve its accuracy and relevance.
+
+This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions.
+
+### Sources   
+- W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php
+- Chat gpt and Codepen used to convert README.md file and app gui html and css formating for the web app pages including the predictor app.- Flask linking html pages: https://www.youtube.com/watch?v=VyICzbnf6q4
+- Ensemble method and code https://www.analyticsvidhya.com/blog/2018/06/comprehensive-guide-for-ensemble-models/
