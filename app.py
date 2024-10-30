@@ -22,6 +22,7 @@ from sklearn.ensemble import VotingClassifier
 import statistics as st
 from collections import Counter
 
+
 # Read the database password from the environment variable in AWS for deployment
 # password = os.getenv('DB_PASSWORD')
 # db_host = os.getenv('DB_HOST')
@@ -168,9 +169,9 @@ def result():
 
         ####################################################
         # Model 1: Load the pre-trained Keras Tuner
-        # model_1 = joblib.load('Saved_Models/kt_best_model.pkl') 
-        # prediction_1 = np.ravel(model_1.predict(features))
-        # print(f"KT Pred: {int(prediction_1[0])}")                
+        model_1 = joblib.load('Saved_Models/kt_best_model.pkl') 
+        prediction_1 = np.ravel(model_1.predict(features))
+        print(f"KT Pred: {int(prediction_1[0])}")                
         ####################################################
         # Model 2: Load the pre-trained Logistic Regression Model
         model_2 = joblib.load('Saved_Models/tuned_logistic_regression_model.pkl')
@@ -194,41 +195,40 @@ def result():
         print(f"SVM Pred: {prediction_4[0]}")
 
         ####################################################       
-        # prediction_5 = model_5.predict(model_5)
         # FINAL_PREDICTION USING ENSEMBLE METHOD
-        # prediction_5 = st.mode([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
-        # pred_counts = Counter([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
+        prediction_5 = st.mode([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
+        pred_counts = Counter([int(prediction_1[0]), prediction_2[0], prediction_3[0], prediction_4[0]])
 
-        # print(f"Original Ensemble Pred: {prediction_5}")
-        # print(f"{pred_counts}")
-        # #Resolve ties in max vote ensemble
-        # if pred_counts[prediction_5] > 1:
-        #     # Tie-breaking strategy: Preference SVM
-        #     # Because it is also an ensemble method and we can determine the features' importances
-        #     prediction_5 = prediction_4[0]
-        #     print("There was an ensemble tie!!!")
-        # print(f"EM Pred: {prediction_5}")
+        print(f"Original Ensemble Pred: {prediction_5}")
+        print(f"{pred_counts}")
+        #Resolve ties in max vote ensemble
+        if pred_counts[prediction_5] > 1:
+            # Tie-breaking strategy: Preference SVM
+            # Because it is also an ensemble method and we can determine the features' importances
+            prediction_5 = prediction_4[0]
+            print("There was an ensemble tie!!!")
+        print(f"EM Pred: {prediction_5}")
 
         # Print Predictions
-        # print(f"KT Pred: {int(prediction_1[0])}")
+        print(f"KT Pred: {int(prediction_1[0])}")
         print(f"LR Pred: {prediction_2[0]}")
         print(f"RF Pred: {prediction_3[0]}")
         print(f"SVM Pred:{prediction_4[0]}")
-        # print(f"EM Pred: {prediction_5}")
+        print(f"EM Pred: {prediction_5}")
 
-        # log_pred_text_1 = "Malignant" if int(prediction_1[0]) == 1 else "Benign"  # Assuming binary classification
+        log_pred_text_1 = "Malignant" if int(prediction_1[0]) == 1 else "Benign"  # Assuming binary classification
         log_pred_text_2 = "Malignant" if prediction_2[0] == 1 else "Benign"  # Assuming binary classification
         log_pred_text_3 = "Malignant" if prediction_3[0] == 1 else "Benign"  # Assuming binary classification
         log_pred_text_4 = "Malignant" if prediction_4[0] == 1 else "Benign"  # Assuming binary classification
-        # log_pred_text_5 = "Malignant" if prediction_5 == 1 else "Benign"  # Assuming binary classification
+        log_pred_text_5 = "Malignant" if prediction_5 == 1 else "Benign"  # Assuming binary classification
 
         # Create prediction text
         prediction_text = (
-            # f'Keras Tuner Class Prediction: {int(prediction_1[0])} = {log_pred_text_1}<br>'
+            f'Keras Tuner Class Prediction: {int(prediction_1[0])} = {log_pred_text_1}<br>'
             f'Logistic Regression Class Prediction: {prediction_2[0]} = {log_pred_text_2}<br>'
             f'Random Forest Class Prediction: {prediction_3[0]} = {log_pred_text_3}<br>'
             f'SVM Class Prediction: {prediction_4[0]} = {log_pred_text_4}<br><br>'
-            # f'Ensemble Method Class Prediction: {prediction_5} = {log_pred_text_5}'
+            f'Ensemble Method Class Prediction: {prediction_5} = {log_pred_text_5}'
         )
         
         # Render the result page with the prediction
