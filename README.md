@@ -1,4 +1,4 @@
-### Cancer Diagnosis Prediction App
+# Cancer Diagnosis Prediction App
 
 ## Disclaimer
 This machine learning model is designed for educational and research purposes only. It is not intended to diagnose, treat, cure, or prevent any disease. Always consult a healthcare professional for medical advice, diagnosis, or treatment.
@@ -215,6 +215,38 @@ stakes applications like medical diagnosis.
 
 
 ## Support Vector Machine Model 1
+### Overview
+Support Vector Machine (SVM) is a supervised learning algorithm widely used for classification and regression tasks, particularly effective for handling high-dimensional data and complex classification problems. In this project, an `SVC model (Support Vector Classifier)` was built to classify samples into two distinct classes. The primary goal was to maximize the accuracy of predictions while ensuring efficient performance on both balanced and imbalanced datasets.
+### Contents
+scaler_forapp.pkl
+selector_forapp.pkl
+svm_forapp.pkl
+### Steps
+1. **Initial Model Construction**
+- Model Setup: A basic SVC model was initially created using a linear kernel and applying class weight balancing to address any potential class imbalance.
+- Performance: This baseline model achieved high classification accuracy, with a score of 0.97 for class 1 and 0.96 for class 0, resulting in an overall accuracy of 0.965.
+2. **Hyperparameter Tuning**
+- Grid Search: focusing on parameters of C (regularization parameter), gamma, and kernel. The grid search revealed that the best parameter configuration was
+``` ‘C’: 1, ‘gamma’: ‘scale’, and ‘kernel’: ‘rbf’. ```
+- Improvement: This tuning shows the cross-validation score to 0.9788, and the adjusted model showed accuracy gains to 0.98 for class 1 and 0.97 for class 0, representing a overall improvement to 0.972.
+3. **Feature Selection**
+- PCA for Dimensionality Reduction:
+Principal Component Analysis (PCA) was initially applied to reduce the feature space. While this effectively lowered the dimensionality, it did not identify the individual features with the most significant impact on predictions. Similarly, the feature importance did not clearly reveal which features were most crucial for accurate predictions clearly.
+- SHAP (SHapley Additive exPlanations):
+The SHAP values provided insights into how each feature contributed to the model’s predictions.
+```
+In the SHAP summary plot:
+The x-axis represents SHAP values, which indicate the influence of each feature on the model’s output. Positive SHAP values push the model towards predicting the positive class, while negative values push it towards the negative class.
+The color gradient shows the feature values: each dot represents a sample, with colors from blue (low values) to red (high values).
+```
+- Recursive Feature Elimination (RFE):
+RFE was employed to automatically select the top 5 most impactful features. Due to some potential noise, the model performed best with 5 features, as it did not achieve optimal accuracy with 10, 12, or 28 features. Additionally, the features selected by RFE closely aligned with the top features indicated by SHAP.
+### Model Evaluation
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices on the test data. When validated with our separate test dataset, the model’s predictions matched the true labels in the original data exactly.
+### Results
+The model’s performance slightly improved after hyperparameter tuning, which is reflected in:
+- A increase in accuracy (from 96.5% to 97.2%).
+- One more correct prediction for class 1 (malignant).
 
 ## Keras Tuner Model 4
 ### Overview
