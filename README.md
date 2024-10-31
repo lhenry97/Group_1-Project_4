@@ -94,22 +94,43 @@ The notebook, ML_KT_Model documents the workflow of the keras tuner including pa
 ### Contents
 -**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
 
--**Kt_best_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+-**Kt_second_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+-**kt_best_model.pkl:** This is the model containing the higher accuracy value of the two models. This has been used in the application.
 
 ### Steps
 1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
-2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 16 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 8 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
 
 ### Model Evaluation
 The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
 
 ### Results
-The model's performance slightly improved after hyperparameter tuning, which is reflected in:
-- A small increase in accuracy (from 97.18% to 98.59%).
-- Minor increase in precision and F1-scores for class 0 (benign).
-- A slight decrease in misclassifications for class 1 (malignant) from 3 to 1.
+In the case of when the models were run in the notebook the following results were shown:
+First Model:
+    Accuracy = 0.9859
+    Class 0:
+        precision = 0.98
+        recall = 1.00
+        f1-core = 0.99
+    Class 1: 
+        precision = 1.00
+        recall = 0.96
+        f1-core = 0.98
 
-Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes.
+Second Model (Optimised):
+    Accuracy = 0.9789
+    Class 0:
+        precision = 0.98
+        recall = 0.99
+        f1-core = 0.98
+    Class 1: 
+        precision = 0.98
+        recall = 0.96
+        f1-core = 0.97
+
+It was identifed that re-running the keras tuner resulted in accuracy fluctuations within ~2% for both models.The two models appeared to perform similarly as when re-running the models, the models would often alternate between which performed better or worse. 
+This is considered normal and is likely due to the nature of the keras tuner model and its inherent randomness in the training process. Due to this, as higher accuracy scores were found to usually correlate with higher precision, recall and f1-scores, the model saved is based on the highest accuracy value.
 
 ## Logistic Regression Model 1
 
