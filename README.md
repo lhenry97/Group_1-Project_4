@@ -51,7 +51,8 @@ The data will undergo cleaning and removal of any duplications or unnecessary da
 3. running the jupyter notebook Collated_Machine_Learning_Notebook.ipynb retrieves json data served by the flask app and saves the ML models.
 
 When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="300"/>
+
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="400"/>
 
 Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
 
@@ -67,7 +68,7 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 7. Find the file called Cancer_Data.csv also in the "data" folder and open this file.
 8. In Options menu set Header to "active" and Delimiter as ",".
 9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format. The app.py file will pull this data once it is run.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="400"/>
 
 ### Fetching and API Integration
 1. From the root directory of the repo open app.py file
@@ -75,14 +76,13 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 3. Create a new file in the root directory called "config.py" which is where you provide your pgAdmin password in a safe manner. 
     - Add this text to the file: "password = "your_password_here" and replace "your_password_here" with your real password.
     - Add: db_host = "localhost"
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config.png?raw=true" alt="config.py" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config.png?raw=true" alt="config.py" width="400"/>
     Save this in root directory of the cloned repo.
     This "config.py" file is referenced in the .gitignore file for safety reasons and is not present in the github repo. 
 4. In git bash terminal activate your dev environment from the local repo and run "python app.py" to make a connection to the database wher the Flask app will serve the database data in JSON, dynamically to the machine learning models, ensuring they are trained on the most up-to-date data. 
 6. Select the CTRL+click on the link that is output in the bash terminal that deploys the Flask locally in a window.
 7. Select the "Predictor_App" option in the top navigation bar to go straight to the machine learning app that will predict cancer.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app%20fields.png?raw=true" alt="Predictor App Fields" width="300"/>
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app_result.png?raw=true" alt="Predictor App Results" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app%20fields.png?raw=true" alt="Predictor App Fields" width="300"/><img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app_result.png?raw=true" alt="Predictor App Results" width="300"/>
 
 # Machine Learning Model Builds
 
@@ -194,6 +194,38 @@ stakes applications like medical diagnosis.
 
 ## Support Vector Machine Model 1
 
+### Overview
+Support Vector Machine (SVM) is a supervised learning algorithm widely used for classification and regression tasks, particularly effective for handling high-dimensional data and complex classification problems. In this project, an `SVC model (Support Vector Classifier)` was built to classify samples into two distinct classes. The primary goal was to maximize the accuracy of predictions while ensuring efficient performance on both balanced and imbalanced datasets.
+### Contents
+scaler_forapp.pkl
+selector_forapp.pkl
+svm_forapp.pkl
+### Steps
+1. **Initial Model Construction**
+- Model Setup: A basic SVC model was initially created using a linear kernel and applying class weight balancing to address any potential class imbalance.
+- Performance: This baseline model achieved high classification accuracy, with a score of 0.97 for class 1 and 0.96 for class 0, resulting in an overall accuracy of 0.965.
+2. **Hyperparameter Tuning**
+- Grid Search: focusing on parameters of C (regularization parameter), gamma, and kernel. The grid search revealed that the best parameter configuration was
+``` ‘C’: 1, ‘gamma’: ‘scale’, and ‘kernel’: ‘rbf’. ```
+- Improvement: This tuning shows the cross-validation score to 0.9788, and the adjusted model showed accuracy gains to 0.98 for class 1 and 0.97 for class 0, representing a overall improvement to 0.972.
+3. **Feature Selection**
+- PCA for Dimensionality Reduction:
+Principal Component Analysis (PCA) was initially applied to reduce the feature space. While this effectively lowered the dimensionality, it did not identify the individual features with the most significant impact on predictions. Similarly, the feature importance did not clearly reveal which features were most crucial for accurate predictions clearly.
+- SHAP (SHapley Additive exPlanations):
+The SHAP values provided insights into how each feature contributed to the model’s predictions.
+```
+In the SHAP summary plot:
+The x-axis represents SHAP values, which indicate the influence of each feature on the model’s output. Positive SHAP values push the model towards predicting the positive class, while negative values push it towards the negative class.
+The color gradient shows the feature values: each dot represents a sample, with colors from blue (low values) to red (high values).
+```
+- Recursive Feature Elimination (RFE):
+RFE was employed to automatically select the top 5 most impactful features. Due to some potential noise, the model performed best with 5 features, as it did not achieve optimal accuracy with 10, 12, or 28 features. Additionally, the features selected by RFE closely aligned with the top features indicated by SHAP.
+### Model Evaluation
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices on the test data. When validated with our separate test dataset, the model’s predictions matched the true labels in the original data exactly.
+### Results
+The model’s performance slightly improved after hyperparameter tuning, which is reflected in:
+- A increase in accuracy (from 96.5% to 97.2%).
+- One more correct prediction for class 1 (malignant).
 
 # Ensemble, Looking Forward and Conclusion
 
@@ -207,7 +239,7 @@ Even though the low error rate of 3 false negatives is a good result, in a medic
 
 Collaborating with the healthcare community will enhance the model's performance and reduce error rates. By incorporating carefully curated input from healthcare professionals into the model's prediction app, we can improve its accuracy and relevance.
 
-This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions.
+This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions and early intervention.
 
 ### Sources   
  - W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php

@@ -33,7 +33,19 @@
 <!-- Header -->
 <div class="container mt-2">
   <h1>Conclusion</h1>
-  </div>
+  
+  <h2>Ensemble Approach Overview</h2>
+  <p>An ensemble approach is a method that uses all the models where the ideal algorithm has low bias (accurately models the true relationship in the data) and low variability (producing consistent predictions across different datasets).</p>
 
+  <p>Since all of the 4 models produced strong performance metrics, we considered leveraging the strengths of all the models with a max count ensemble method or majority rules approach. When resolving any ties, the SVM model was utilized because it resulted in the best performance metrics for the ensemble. Additionally, our SVM model is able to reduce computational resources by reducing dimensionality to only using 5 features. By focusing on these 5 features, we simplify the interpretability of the model and can guide future feature engineering efforts to optimize the model further.</p>
+
+  <p>The ensemble method produced excellent performance metrics with an overall accuracy of 0.98. The precision score of 1.0 indicates that predicted malignancies were 100% accurate. The recall score of 0.94 indicates that 94% of actual malignancies were accurately predicted.</p>
+
+  <p>Even though the low error rate of 3 false negatives is a good result, in a medical context the consequences of not identifying malignancies such as these 3 instances can have serious and longstanding implications.</p>
+
+  <p>Collaborating with the healthcare community will enhance the model's performance and reduce error rates. By incorporating carefully curated input from healthcare professionals into the model's prediction app, we can improve its accuracy and relevance.</p>
+
+  <p>This prediction app will not only assist healthcare professionals in their decision-making processes but also facilitate the collection of additional data in the future. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions and early intervention.</p>
+</div>
 </body>
 </html>
