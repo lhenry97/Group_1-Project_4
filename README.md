@@ -38,7 +38,7 @@ https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content
 <img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/proposal.png" alt="Proposal Inspiration" width="300"/>
 
 # Method
-The data will undergo cleaning and removal of any duplications or unnecessary data. Feature engineering will then be conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres will be used to manage the database and the app.py flask app will be used to connect to the database to enable a website to call information from it. A number of machine learning models will be tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and potentially Deep Neural Network. Each model will undergo optimisation and then they will be evaluated to select the best model. The selected machine learning model will then be used in the final website. The website will look similar to the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
+The data underwent cleaning and removal of any duplications or unnecessary data. Feature engineering was then conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres was used to manage the database and the app.py flask app was used to connect to the database to enable a website to call information from it. A number of machine learning models were tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and Deep Neural Network (utilising keras tuner). This was conducted using jupyter notebook for each machine learning model and then the workflow was collated into one complete notebook for ease of use. Each model has undergone optimisation and evaluated to select the best model.  The selected machine learning model has been used in the final website. The website took inspiration from the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
 
 
 # Workflow for Reproducibility
@@ -192,40 +192,54 @@ dictions. This experience underscores the importance of balancing model
 simplicity with the retention of essential predictive information for high-
 stakes applications like medical diagnosis.
 
+
 ## Support Vector Machine Model 1
 
+## Keras Tuner Model 4
 ### Overview
-Support Vector Machine (SVM) is a supervised learning algorithm widely used for classification and regression tasks, particularly effective for handling high-dimensional data and complex classification problems. In this project, an `SVC model (Support Vector Classifier)` was built to classify samples into two distinct classes. The primary goal was to maximize the accuracy of predictions while ensuring efficient performance on both balanced and imbalanced datasets.
+A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
+The notebook, ML_KT_Model documents the workflow of the keras tuner including parameter selection, model training, optimisation of the model and evaluating and testing with the model created. It includes an initial model that specifies the specific parameters used in the model and then a second model that utilises a function to perform hyperparameter tuning for the model. 
+
 ### Contents
-scaler_forapp.pkl
-selector_forapp.pkl
-svm_forapp.pkl
+-**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
+
+-**Kt_second_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+-**kt_best_model.pkl:** This is the model containing the higher accuracy value of the two models. This has been used in the application.
+
 ### Steps
-1. **Initial Model Construction**
-- Model Setup: A basic SVC model was initially created using a linear kernel and applying class weight balancing to address any potential class imbalance.
-- Performance: This baseline model achieved high classification accuracy, with a score of 0.97 for class 1 and 0.96 for class 0, resulting in an overall accuracy of 0.965.
-2. **Hyperparameter Tuning**
-- Grid Search: focusing on parameters of C (regularization parameter), gamma, and kernel. The grid search revealed that the best parameter configuration was
-``` ‘C’: 1, ‘gamma’: ‘scale’, and ‘kernel’: ‘rbf’. ```
-- Improvement: This tuning shows the cross-validation score to 0.9788, and the adjusted model showed accuracy gains to 0.98 for class 1 and 0.97 for class 0, representing a overall improvement to 0.972.
-3. **Feature Selection**
-- PCA for Dimensionality Reduction:
-Principal Component Analysis (PCA) was initially applied to reduce the feature space. While this effectively lowered the dimensionality, it did not identify the individual features with the most significant impact on predictions. Similarly, the feature importance did not clearly reveal which features were most crucial for accurate predictions clearly.
-- SHAP (SHapley Additive exPlanations):
-The SHAP values provided insights into how each feature contributed to the model’s predictions.
-```
-In the SHAP summary plot:
-The x-axis represents SHAP values, which indicate the influence of each feature on the model’s output. Positive SHAP values push the model towards predicting the positive class, while negative values push it towards the negative class.
-The color gradient shows the feature values: each dot represents a sample, with colors from blue (low values) to red (high values).
-```
-- Recursive Feature Elimination (RFE):
-RFE was employed to automatically select the top 5 most impactful features. Due to some potential noise, the model performed best with 5 features, as it did not achieve optimal accuracy with 10, 12, or 28 features. Additionally, the features selected by RFE closely aligned with the top features indicated by SHAP.
+1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 8 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+
 ### Model Evaluation
-The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices on the test data. When validated with our separate test dataset, the model’s predictions matched the true labels in the original data exactly.
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
+
 ### Results
-The model’s performance slightly improved after hyperparameter tuning, which is reflected in:
-- A increase in accuracy (from 96.5% to 97.2%).
-- One more correct prediction for class 1 (malignant).
+In the case of when the models were run in the notebook the following results were shown:
+First Model:
+    Accuracy = 0.9859
+    Class 0:
+        precision = 0.98
+        recall = 1.00
+        f1-core = 0.99
+    Class 1: 
+        precision = 1.00
+        recall = 0.96
+        f1-core = 0.98
+
+Second Model (Optimised):
+    Accuracy = 0.9789
+    Class 0:
+        precision = 0.98
+        recall = 0.99
+        f1-core = 0.98
+    Class 1: 
+        precision = 0.98
+        recall = 0.96
+        f1-core = 0.97
+
+It was identifed that re-running the keras tuner resulted in accuracy fluctuations within ~2% for both models.The two models appeared to perform similarly as when re-running the models, the models would often alternate between which performed better or worse. 
+This is considered normal and is likely due to the nature of the keras tuner model and its inherent randomness in the training process. Due to this, as higher accuracy scores were found to usually correlate with higher precision, recall and f1-scores, the model saved is based on the highest accuracy value.
 
 # Ensemble, Looking Forward and Conclusion
 
