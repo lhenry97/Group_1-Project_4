@@ -38,7 +38,7 @@ https://www.canva.com/design/DAGUqhcvQm0/zgpipBtmAcZnmDA6aaSEtw/edit?utm_content
 <img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/proposal.png" alt="Proposal Inspiration" width="300"/>
 
 # Method
-The data will undergo cleaning and removal of any duplications or unnecessary data. Feature engineering will then be conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres will be used to manage the database and the app.py flask app will be used to connect to the database to enable a website to call information from it. A number of machine learning models will be tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and potentially Deep Neural Network. Each model will undergo optimisation and then they will be evaluated to select the best model. The selected machine learning model will then be used in the final website. The website will look similar to the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
+The data underwent cleaning and removal of any duplications or unnecessary data. Feature engineering was then conducted on the dataset to ensure the data is in a usable state for machine learning. Postgres was used to manage the database and the app.py flask app was used to connect to the database to enable a website to call information from it. A number of machine learning models were tested and evaluated on their prediction of the cancer diagnosis. The models include logistic regression, SVM, random forest and Deep Neural Network (utilising keras tuner). This was conducted using jupyter notebook for each machine learning model and then the workflow was collated into one complete notebook for ease of use. Each model has undergone optimisation and evaluated to select the best model.  The selected machine learning model has been used in the final website. The website took inspiration from the above screenshot to enable a user to alter different visual characteristics and the model will output a predicted diagnosis.
 
 
 # Workflow for Reproducibility
@@ -178,22 +178,44 @@ The notebook, ML_KT_Model documents the workflow of the keras tuner including pa
 ### Contents
 -**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
 
--**Kt_best_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+-**Kt_second_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+-**kt_best_model.pkl:** This is the model containing the higher accuracy value of the two models. This has been used in the application.
 
 ### Steps
 1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
-2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 16 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 8 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
 
 ### Model Evaluation
 The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
 
 ### Results
-The model's performance slightly improved after hyperparameter tuning, which is reflected in:
-- A small increase in accuracy (from 97.18% to 98.59%).
-- Minor increase in precision and F1-scores for class 0 (benign).
-- A slight decrease in misclassifications for class 1 (malignant) from 3 to 1.
+In the case of when the models were run in the notebook the following results were shown:
+First Model:
+    Accuracy = 0.9859
+    Class 0:
+        precision = 0.98
+        recall = 1.00
+        f1-core = 0.99
+    Class 1: 
+        precision = 1.00
+        recall = 0.96
+        f1-core = 0.98
 
-Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes. 
+Second Model (Optimised):
+    Accuracy = 0.9789
+    Class 0:
+        precision = 0.98
+        recall = 0.99
+        f1-core = 0.98
+    Class 1: 
+        precision = 0.98
+        recall = 0.96
+        f1-core = 0.97
+
+It was identifed that re-running the keras tuner resulted in accuracy fluctuations within ~2% for both models.The two models appeared to perform similarly as when re-running the models, the models would often alternate between which performed better or worse. 
+This is considered normal and is likely due to the nature of the keras tuner model and its inherent randomness in the training process. Due to this, as higher accuracy scores were found to usually correlate with higher precision, recall and f1-scores, the model saved is based on the highest accuracy value.
+
 
 # Ensemble, Looking Forward and Conclusion
 
