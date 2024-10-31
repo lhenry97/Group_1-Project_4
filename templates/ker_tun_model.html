@@ -33,7 +33,64 @@
 <!-- Header -->
 <div class="container mt-2">
   <h1>Keras Tuner Model</h1>
+  <h2>Overview</h2>
+  <p>
+      A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
+      The notebook, <code>ML_KT_Model</code>, documents the workflow of the Keras tuner including parameter selection, model training, optimisation of the model, and evaluating and testing with the model created. It includes an initial model that specifies the specific parameters used in the model and then a second model that utilises a function to perform hyperparameter tuning for the model. 
+  </p>
+
+  <h2>Contents</h2>
+  <ul>
+      <li><strong>Kt_initial_model.pkl:</strong> This is the unoptimised saved version of the Keras tuner model.</li>
+      <li><strong>Kt_second_model.pkl:</strong> This is the saved optimised version of the Keras tuner model which utilises a function for hyperparameter tuning.</li>
+      <li><strong>kt_best_model.pkl:</strong> This is the model containing the higher accuracy value of the two models. This has been used in the application.</li>
+  </ul>
+
+  <h2>Steps</h2>
+  <ol>
+      <li><strong>Initial Model Training:</strong> Initially, a Keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.</li>
+      <li><strong>Optimised Model Training:</strong> A second Keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32, and the third 8 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.</li>
+  </ol>
+
+  <h2>Model Evaluation</h2>
+  <p>The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.</p>
+
+  <h2>Results</h2>
+  <p>In the case of when the models were run in the notebook the following results were shown:</p>
+
+  <div class="results">
+      <h3>First Model:</h3>
+      <pre>
+      Accuracy = 0.9859
+      Class 0:
+          precision = 0.98
+          recall = 1.00
+          f1-score = 0.99
+      Class 1: 
+          precision = 1.00
+          recall = 0.96
+          f1-score = 0.98
+      </pre>
+      
+      <h3>Second Model (Optimised):</h3>
+      <pre>
+      Accuracy = 0.9789
+      Class 0:
+          precision = 0.98
+          recall = 0.99
+          f1-score = 0.98
+      Class 1: 
+          precision = 0.98
+          recall = 0.96
+          f1-score = 0.97
+      </pre>
   </div>
+
+  <p>
+      It was identified that re-running the Keras tuner resulted in accuracy fluctuations within ~2% for both models. The two models appeared to perform similarly as when re-running the models, the models would often alternate between which performed better or worse. 
+      This is considered normal and is likely due to the nature of the Keras tuner model and its inherent randomness in the training process. Due to this, as higher accuracy scores were found to usually correlate with higher precision, recall, and F1-scores, the model saved is based on the highest accuracy value.
+  </p>
+</div>
 
 </body>
 </html>
