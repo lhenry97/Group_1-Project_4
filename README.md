@@ -52,7 +52,7 @@ The data underwent cleaning and removal of any duplications or unnecessary data.
 
 When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
 
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="400"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="500"/>
 
 Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
 
