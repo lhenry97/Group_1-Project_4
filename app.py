@@ -49,6 +49,11 @@ cd = Base.classes.Cancer_Data
 
 app = Flask(__name__)
 
+# Pre-load models at the start of app
+model_1 = joblib.load('Saved_Models/kt_best_model.pkl')
+model_2 = joblib.load('Saved_Models/tuned_logistic_regression_model.pkl')
+model_3 = joblib.load('Saved_Models/rf_model.pkl')
+model_4 = joblib.load('Saved_Models/svm_forapp.pkl') 
 
 #################################################
 # Flask Routes
@@ -151,18 +156,8 @@ def result():
             float(request.form['fractal_dimension_se']) 
         ]
 
-        # # Collect input data from the form for the selected 30 features
-        # svm_input_features = [
-        #     float(request.form['concave points_mean']),
-        #     float(request.form['radius_worst']),
-        #     float(request.form['texture_worst']),
-        #     float(request.form['symmetry_worst']),
-        #     float(request.form['radius_se'])
-        # ]
-
         # Print input features for debugging
-        print("Input Features:", input_features)
-        # print("SVM Input Features:", svm_input_features)
+        # print("Input Features:", input_features)
 
         # Convert input features into a NumPy array
         features = np.array(input_features).reshape(1, -1)
@@ -233,8 +228,6 @@ def result():
         
         # Render the result page with the prediction
         return render_template('result.html', prediction_text=prediction_text)
-
-        # return render_template('result.html', prediction_text=prediction_text)
 
     except ValueError as e:
         return render_template('result.html', prediction_text=f'The predicted class is not determined {e}.')

@@ -51,7 +51,7 @@ The data underwent cleaning and removal of any duplications or unnecessary data.
 3. running the jupyter notebook Collated_Machine_Learning_Notebook.ipynb retrieves json data served by the flask app and saves the ML models.
 
 When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%archictecture%204.png" alt="data architecture" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="300"/>
 
 Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
 
@@ -67,7 +67,7 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 7. Find the file called Cancer_Data.csv also in the "data" folder and open this file.
 8. In Options menu set Header to "active" and Delimiter as ",".
 9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format. The app.py file will pull this data once it is run.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png" alt="pgAdmin 4" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="300"/>
 
 ### Fetching and API Integration
 1. From the root directory of the repo open app.py file
@@ -75,17 +75,41 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 3. Create a new file in the root directory called "config.py" which is where you provide your pgAdmin password in a safe manner. 
     - Add this text to the file: "password = "your_password_here" and replace "your_password_here" with your real password.
     - Add: db_host = "localhost"
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config%204.png" alt="pgAdmin 4" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config.png?raw=true" alt="config.py" width="300"/>
     Save this in root directory of the cloned repo.
     This "config.py" file is referenced in the .gitignore file for safety reasons and is not present in the github repo. 
-4. You can also add db_host = "localhost" to the file config.py if connecting to the local server.
-    If you are connecting remotely to the database, you could potentially use the IP of one of the teammates servers by referencing their IP address instead of "localhost".
-5. In git bash terminal activate your dev environment from the local repo and run "python app.py" to make a connection to the database wher the Flask app will serve the database data in JSON, dynamically to the machine learning models, ensuring they are trained on the most up-to-date data. 
+4. In git bash terminal activate your dev environment from the local repo and run "python app.py" to make a connection to the database wher the Flask app will serve the database data in JSON, dynamically to the machine learning models, ensuring they are trained on the most up-to-date data. 
 6. Select the CTRL+click on the link that is output in the bash terminal that deploys the Flask locally in a window.
 7. Select the "Predictor_App" option in the top navigation bar to go straight to the machine learning app that will predict cancer.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/Predictor%20App.png" alt="Predictor App" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app%20fields.png?raw=true" alt="Predictor App Fields" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app_result.png?raw=true" alt="Predictor App Results" width="300"/>
 
 # Machine Learning Model Builds
+
+## Keras Tuner Model 4
+### Overview
+A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
+The notebook, ML_KT_Model documents the workflow of the keras tuner including parameter selection, model training, optimisation of the model and evaluating and testing with the model created. It includes an initial model that specifies the specific parameters used in the model and then a second model that utilises a function to perform hyperparameter tuning for the model. 
+
+### Contents
+-**Kt_intial_model.pkl:** This is the unoptimised saved version of the keras tuner model
+
+-**Kt_best_model.pkl:** This is the saved optimised version of the keras tuner model which utilises a function for hyperparameter tuning.
+
+### Steps
+1. **Initial Model Training:** Initially a keras tuner model was trained that contained two hidden layers with 8 neurons in the first layer and 5 in the second. The model was then compiled using Adam as the optimizer and the epochs set to 100.
+2. **Optimised Model Training:** A second keras tuner model was then trained utilising a function to identify the best parameters for the model. It identified three hidden layers with the first having 32 neurons, the second also 32 and the third 16 neurons. The optimizer was also identified to be Adam and the epoch was set to 50.
+
+### Model Evaluation
+The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices using test data.
+
+### Results
+The model's performance slightly improved after hyperparameter tuning, which is reflected in:
+- A small increase in accuracy (from 97.18% to 98.59%).
+- Minor increase in precision and F1-scores for class 0 (benign).
+- A slight decrease in misclassifications for class 1 (malignant) from 3 to 1.
+
+Therefore, hyperparameter tuning slightly increased the model's ability to differentiate between the classes.
 
 ## Logistic Regression Model 1
 
@@ -118,8 +142,6 @@ Therefore, feature selection with RFE slightly reduced the model's ability to di
 
 ### Next Steps
 We explored other machine learning algorithms such as Random Forest, SVM, or Neural Networks to compare performance.
-
-## Support Vector Machine Model 1
 
 ## Random Forest Model 3
 
@@ -170,6 +192,9 @@ dictions. This experience underscores the importance of balancing model
 simplicity with the retention of essential predictive information for high-
 stakes applications like medical diagnosis.
 
+
+## Support Vector Machine Model 1
+
 ## Keras Tuner Model 4
 ### Overview
 A Keras Tuner model was trained on the cancer dataset to predict whether a cancer is likely benign (B) or malignant (M) based on its visual characteristics. Through hyperparameter tuning, the model was optimised to select the best parameters for the best performing model. 
@@ -216,7 +241,6 @@ Second Model (Optimised):
 It was identifed that re-running the keras tuner resulted in accuracy fluctuations within ~2% for both models.The two models appeared to perform similarly as when re-running the models, the models would often alternate between which performed better or worse. 
 This is considered normal and is likely due to the nature of the keras tuner model and its inherent randomness in the training process. Due to this, as higher accuracy scores were found to usually correlate with higher precision, recall and f1-scores, the model saved is based on the highest accuracy value.
 
-
 # Ensemble, Looking Forward and Conclusion
 
 An ensemble approach is a method that uses all the models where the ideal algorithm has low bias (accurately models the true relationship in the data) and low variability (producing consistent predictions across different datasets).
@@ -232,6 +256,8 @@ Collaborating with the healthcare community will enhance the model's performance
 This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions.
 
 ### Sources   
-- W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php
-- Chat gpt and Codepen used to convert README.md file and app gui html and css formating for the web app pages including the predictor app.- Flask linking html pages: https://www.youtube.com/watch?v=VyICzbnf6q4
-- Ensemble method and code https://www.analyticsvidhya.com/blog/2018/06/comprehensive-guide-for-ensemble-models/
+ - W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php
+ - Chat gpt and Codepen used to convert README.md file and app gui html and css formating for the web app pages including the predictor app.
+ - Flask linking html pages: https://www.youtube.com/watch?v=VyICzbnf6q4
+ - Ensemble method and code https://www.analyticsvidhya.com/blog/2018/06/comprehensive-guide-for-ensemble-models/
+ - Flask psycopg2 crendential connection: https://medium.com/@shahrukhshl0/building-a-flask-crud-application-with-psycopg2-58de201e3c14 and chatgpt.
