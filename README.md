@@ -68,7 +68,7 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 7. Find the file called Cancer_Data.csv also in the "data" folder and open this file.
 8. In Options menu set Header to "active" and Delimiter as ",".
 9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format. The app.py file will pull this data once it is run.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="400"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="500"/>
 
 ### Fetching and API Integration
 1. From the root directory of the repo open app.py file
