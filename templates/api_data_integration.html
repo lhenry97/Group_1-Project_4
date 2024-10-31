@@ -58,7 +58,7 @@
         <li>From the root directory of the repo, open <code>app.py</code> file.</li>
         <li>Install <code>psycopg2</code> and <code>numpy</code> if you need to: use <code>pip</code> to install the libraries.</li>
         <li>Create a new file in the root directory called <code>config.py</code> where you provide your pgAdmin password in a safe manner. Add this text to the file: <code>password = "your_password_here"</code> and replace <code>your_password_here</code> with your real password. Save this in the root directory of the cloned repo. This <code>config.py</code> file is referenced in the <code>.gitignore</code> file for safety reasons and is not present in the GitHub repo.</li>
-        <li>You can also add <code>db_host = "localhost"</code> to the file <code>config.py</code> if connecting to the local server. If you are connecting remotely to the database, you could potentially use the IP of one of your teammates' servers by referencing their IP address instead of <code>localhost</code>.</li>
+        <li>Also add <code>db_host = "localhost"</code> to the file <code>config.py</code>.</li>
         <li>In the git bash terminal, activate your dev environment from the local repo and run <code>python app.py</code> to make a connection to the database where the Flask app will serve the database data in JSON, dynamically to the machine learning models, ensuring they are trained on the most up-to-date data.</li>
         <li>Select <strong>CTRL + click</strong> on the link that is output in the bash terminal that deploys the Flask locally in a window.</li>
         <li>Select the <strong>Predictor_App</strong> option in the top navigation bar to go straight to the machine learning app that will predict cancer.</li>

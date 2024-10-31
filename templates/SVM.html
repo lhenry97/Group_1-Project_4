@@ -33,7 +33,75 @@
 <!-- Header -->
 <div class="container mt-2">
   <h1>Support Vector Machine Model</h1>
-  </div>
+
+  <h1>Overview</h1>
+  <p>
+      Support Vector Machine (SVM) is a supervised learning algorithm widely used for classification and regression tasks, particularly effective for handling high-dimensional data and complex classification problems. In this project, an <code>SVC model (Support Vector Classifier)</code> was built to classify samples into two distinct classes. The primary goal was to maximize the accuracy of predictions while ensuring efficient performance on both balanced and imbalanced datasets.
+  </p>
+
+  <h2>Contents</h2>
+  <ul>
+      <li>scaler_forapp.pkl</li>
+      <li>selector_forapp.pkl</li>
+      <li>svm_forapp.pkl</li>
+  </ul>
+
+  <h2>Steps</h2>
+  <h3>1. Initial Model Construction</h3>
+  <ul>
+      <li>
+          <strong>Model Setup:</strong> A basic SVC model was initially created using a linear kernel and applying class weight balancing to address any potential class imbalance.
+      </li>
+      <li>
+          <strong>Performance:</strong> This baseline model achieved high classification accuracy, with a score of 0.97 for class 1 and 0.96 for class 0, resulting in an overall accuracy of 0.965.
+      </li>
+  </ul>
+
+  <h3>2. Hyperparameter Tuning</h3>
+  <ul>
+      <li>
+          <strong>Grid Search:</strong> Focusing on parameters of C (regularization parameter), gamma, and kernel. The grid search revealed that the best parameter configuration was:
+          <pre>‘C’: 1, ‘gamma’: ‘scale’, and ‘kernel’: ‘rbf’.</pre>
+      </li>
+      <li>
+          <strong>Improvement:</strong> This tuning improved the cross-validation score to 0.9788, and the adjusted model showed accuracy gains to 0.98 for class 1 and 0.97 for class 0, representing an overall improvement to 0.972.
+      </li>
+  </ul>
+
+  <h3>3. Feature Selection</h3>
+  <ul>
+      <li>
+          <strong>PCA for Dimensionality Reduction:</strong> Principal Component Analysis (PCA) was initially applied to reduce the feature space. While this effectively lowered the dimensionality, it did not identify the individual features with the most significant impact on predictions. Similarly, the feature importance did not clearly reveal which features were most crucial for accurate predictions.
+      </li>
+      <li>
+          <strong>SHAP (SHapley Additive exPlanations):</strong> The SHAP values provided insights into how each feature contributed to the model’s predictions.
+          <pre>
+In the SHAP summary plot:
+The x-axis represents SHAP values, which indicate the influence of each feature on the model’s output. Positive SHAP values push the model towards predicting the positive class, while negative values push it towards the negative class.
+The color gradient shows the feature values: each dot represents a sample, with colors from blue (low values) to red (high values).
+          </pre>
+      </li>
+      <li>
+          <strong>Recursive Feature Elimination (RFE):</strong> RFE was employed to automatically select the top 5 most impactful features. Due to some potential noise, the model performed best with 5 features, as it did not achieve optimal accuracy with 10, 12, or 28 features. Additionally, the features selected by RFE closely aligned with the top features indicated by SHAP.
+      </li>
+  </ul>
+
+  <h2>Model Evaluation</h2>
+  <p>
+      The model was evaluated using accuracy, precision, recall, F1 score, and confusion matrices on the test data. When validated with our separate test dataset, the model’s predictions matched the true labels in the original data exactly.
+  </p>
+
+  <h2>Results</h2>
+  <p>
+      The model’s performance slightly improved after hyperparameter tuning, which is reflected in:
+  </p>
+  <ul>
+      <li>A increase in accuracy (from 96.5% to 97.2%).</li>
+      <li>One more correct prediction for class 1 (malignant).</li>
+  </ul>
+
+
+</div>
 
 </body>
 </html>

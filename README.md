@@ -51,7 +51,8 @@ The data underwent cleaning and removal of any duplications or unnecessary data.
 3. running the jupyter notebook Collated_Machine_Learning_Notebook.ipynb retrieves json data served by the flask app and saves the ML models.
 
 When the Flask app starts, it establishes a connection to the PostgreSQL database using SQLAlchemy. This connection allows the app to interact with the database, querying the database and serving the results in JSON format to the machine learning training code in a jupyter notebook. When the endpoint is called, any updates made to the database will be reflected in the JSON response automatically without needing to restart the Flask app.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="300"/>
+
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/data%20architecture.png?raw=true" alt="data architecture" width="400"/>
 
 Trained machine learning models are saved on the backend whenever the jupyter notebook is run. The app loads the saved models for use when an end/user such as a doctor or other healthcare professional attempts to make a prediction.
 
@@ -67,7 +68,7 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 7. Find the file called Cancer_Data.csv also in the "data" folder and open this file.
 8. In Options menu set Header to "active" and Delimiter as ",".
 9. Optionally, run the json_agg query in the "cancer_data.sql" to produce the data in json format. The app.py file will pull this data once it is run.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/pgAdmin%204.png?raw=true" alt="pgAdmin 4" width="400"/>
 
 ### Fetching and API Integration
 1. From the root directory of the repo open app.py file
@@ -75,14 +76,13 @@ This section also explains how to connect to a PostgreSQL database using psycopg
 3. Create a new file in the root directory called "config.py" which is where you provide your pgAdmin password in a safe manner. 
     - Add this text to the file: "password = "your_password_here" and replace "your_password_here" with your real password.
     - Add: db_host = "localhost"
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config.png?raw=true" alt="config.py" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/config.png?raw=true" alt="config.py" width="400"/>
     Save this in root directory of the cloned repo.
     This "config.py" file is referenced in the .gitignore file for safety reasons and is not present in the github repo. 
 4. In git bash terminal activate your dev environment from the local repo and run "python app.py" to make a connection to the database wher the Flask app will serve the database data in JSON, dynamically to the machine learning models, ensuring they are trained on the most up-to-date data. 
 6. Select the CTRL+click on the link that is output in the bash terminal that deploys the Flask locally in a window.
 7. Select the "Predictor_App" option in the top navigation bar to go straight to the machine learning app that will predict cancer.
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app%20fields.png?raw=true" alt="Predictor App Fields" width="300"/>
-<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app_result.png?raw=true" alt="Predictor App Results" width="300"/>
+<img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app%20fields.png?raw=true" alt="Predictor App Fields" width="300"/><img src="https://github.com/CathyMatthee/predictor_app/blob/main/images/app_result.png?raw=true" alt="Predictor App Results" width="300"/>
 
 # Machine Learning Model Builds
 
@@ -274,7 +274,7 @@ Even though the low error rate of 3 false negatives is a good result, in a medic
 
 Collaborating with the healthcare community will enhance the model's performance and reduce error rates. By incorporating carefully curated input from healthcare professionals into the model's prediction app, we can improve its accuracy and relevance.
 
-This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions.
+This prediction app will not only assist healthcare professionals in their decision-making processes but also in the future facilitate the collection of additional data. This continuous feedback loop will ensure that the models remain up-to-date and provide reliable support for clinical decisions and early intervention.
 
 ### Sources   
  - W3 Schools code used to build app navigation https://www.w3schools.com/bootstrap5/bootstrap_navs.php
